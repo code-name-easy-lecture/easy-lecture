@@ -1,0 +1,22 @@
+name: Feature
+description: Propose a new feature or improvement
+title: "[Feature]: "
+labels: ["type: feature"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What should be built, and why does it matter?
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: Specific, checkable conditions that mean this is finished.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
