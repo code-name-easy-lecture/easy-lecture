@@ -1,0 +1,38 @@
+name: Plan
+description: A proposal for the group to review and approve
+title: "[Plan]: "
+labels: ["type: plan"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or goal
+      description: What are we trying to solve or achieve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other options and why you ruled them out.
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact and effort
+      description: Which areas it touches, rough size, risks, and cost.
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: What decision or outcome closes this plan?
+      placeholder: |
+        - [ ] Group reviewed at the weekly sync
+        - [ ] Approved or rejected, with the decision recorded below
+    validations:
+      required: true
