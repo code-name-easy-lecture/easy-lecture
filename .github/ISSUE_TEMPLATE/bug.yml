@@ -1,0 +1,30 @@
+name: Bug
+description: Report something that is broken
+title: "[Bug]: "
+labels: ["type: bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Include what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: What needs to be true for this bug to be considered fixed?
+      placeholder: |
+        - [ ] ...
+    validations:
+      required: true
