@@ -1,0 +1,6 @@
+/apps/web/                   @jbalderas-pgit
+/apps/web/src/app/api/       @EnterBluey
+/infra/                      @EnterBluey
+/services/retrieval/         @prestonimus
+/packages/shared/            @jbalderas-pgit @EnterBluey @prestonimus
+/.github/                    @jbalderas-pgit
