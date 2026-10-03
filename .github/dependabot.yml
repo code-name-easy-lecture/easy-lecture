@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/apps/web"
+    schedule:
+      interval: "weekly"
+    labels: ["type: chore", "area: frontend"]
+  - package-ecosystem: "pip"
+    directory: "/services/retrieval"
+    schedule:
+      interval: "weekly"
+    labels: ["type: chore", "area: retrieval"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels: ["type: chore", "area: infra"]
