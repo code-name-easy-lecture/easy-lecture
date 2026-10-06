@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      web: ${{ steps.filter.outputs.web }}
+      retrieval: ${{ steps.filter.outputs.retrieval }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            web:
+              - 'apps/web/**'
+              - 'packages/shared/**'
+              - '.github/workflows/ci.yml'
+            retrieval:
+              - 'services/retrieval/**'
+              - 'packages/shared/**'
+              - '.github/workflows/ci.yml'
+
+  web:
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+
+  retrieval:
+    needs: changes
+    if: needs.changes.outputs.retrieval == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/retrieval
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: services/retrieval/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: pytest
