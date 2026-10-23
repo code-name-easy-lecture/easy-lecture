@@ -1,17 +1,31 @@
 version: 2
+
 updates:
   - package-ecosystem: "npm"
     directory: "/apps/web"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 3
     labels: ["type: chore", "area: frontend"]
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
   - package-ecosystem: "pip"
     directory: "/services/retrieval"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 3
     labels: ["type: chore", "area: retrieval"]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 3
     labels: ["type: chore", "area: infra"]
