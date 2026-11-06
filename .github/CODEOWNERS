@@ -4,3 +4,6 @@
 /services/retrieval/         @prestonimus
 /packages/shared/            @jbalderas-pgit @EnterBluey @prestonimus
 /.github/                    @jbalderas-pgit
+/docs/answer-format/         @prestonimus @jbalderas-pgit
+/docs/transcript-format/     @EnterBluey @prestonimus
+/docs/api.md                 @EnterBluey @jbalderas-pgit
