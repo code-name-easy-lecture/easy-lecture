@@ -1,0 +1,38 @@
+# Postgres for local development. See "Local database" in the README.
+#
+# The major version matches what Neon runs for staging and the pilot. The tag
+# has no minor version on purpose: Neon moves to each new minor release by
+# itself, so pulling the latest 18.x keeps the two in step.
+
+name: easy-lecture
+
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Copy .env.example to .env first}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Copy .env.example to .env first}
+      POSTGRES_DB: ${POSTGRES_DB:?Copy .env.example to .env first}
+    ports:
+      # Bound to this machine only, so the database is never reachable from
+      # the network.
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # Postgres 18 keeps its data in /var/lib/postgresql/18/docker, so the
+      # volume goes on the parent folder. (17 and older used .../data.)
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      # Checked over TCP: on first start the image runs a temporary server
+      # that only listens on a socket, and that must not count as ready.
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres-data:
